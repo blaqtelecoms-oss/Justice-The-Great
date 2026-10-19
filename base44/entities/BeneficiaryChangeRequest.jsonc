@@ -1,0 +1,57 @@
+{
+  "name": "BeneficiaryChangeRequest",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "requested_beneficiaries": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Rejected"
+      ],
+      "default": "Pending"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "member_id"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "data.user_id": "{{user.id}}"
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

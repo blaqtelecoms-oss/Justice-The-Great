@@ -1,0 +1,38 @@
+{
+  "name": "AdminSetting",
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "password_hash": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "label",
+    "password_hash"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

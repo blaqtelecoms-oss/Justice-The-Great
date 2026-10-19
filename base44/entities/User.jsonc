@@ -1,0 +1,20 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "member"
+      ],
+      "default": "member"
+    },
+    "member_id": {
+      "type": "string"
+    },
+    "group_scheme_id": {
+      "type": "string"
+    }
+  }
+}

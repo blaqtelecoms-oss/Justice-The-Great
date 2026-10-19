@@ -1,0 +1,57 @@
+{
+  "name": "Complaint",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "complaint_type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Received",
+        "Under Review",
+        "Resolved",
+        "Escalated"
+      ],
+      "default": "Received"
+    },
+    "resolution_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "description"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

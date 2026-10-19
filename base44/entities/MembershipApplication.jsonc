@@ -1,0 +1,100 @@
+{
+  "name": "MembershipApplication",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string"
+    },
+    "id_number": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "plan_type": {
+      "type": "string",
+      "enum": [
+        "Family",
+        "Single Parent",
+        "Individual"
+      ],
+      "default": "Individual"
+    },
+    "scheme_type": {
+      "type": "string",
+      "enum": [
+        "Individual",
+        "Group"
+      ],
+      "default": "Individual"
+    },
+    "group_name": {
+      "type": "string"
+    },
+    "cover_amount": {
+      "type": "number"
+    },
+    "premium_amount": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Declined"
+      ],
+      "default": "Pending"
+    },
+    "decision_notes": {
+      "type": "string"
+    },
+    "decided_by_id": {
+      "type": "string"
+    },
+    "decided_date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "full_name",
+    "id_number",
+    "email",
+    "plan_type"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

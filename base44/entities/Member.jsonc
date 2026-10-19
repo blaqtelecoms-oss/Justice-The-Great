@@ -1,0 +1,115 @@
+{
+  "name": "Member",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "id_number": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "policy_number": {
+      "type": "string"
+    },
+    "plan_type": {
+      "type": "string",
+      "enum": [
+        "Family",
+        "Single Parent",
+        "Individual"
+      ],
+      "default": "Individual"
+    },
+    "scheme_type": {
+      "type": "string",
+      "enum": [
+        "Individual",
+        "Group"
+      ],
+      "default": "Individual"
+    },
+    "group_scheme_id": {
+      "type": "string"
+    },
+    "cover_amount": {
+      "type": "number"
+    },
+    "premium_amount": {
+      "type": "number"
+    },
+    "policy_start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "lapsed",
+        "cancelled"
+      ],
+      "default": "active"
+    },
+    "premium_paid_up_to": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "full_name",
+    "id_number",
+    "policy_number",
+    "plan_type"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.scheme_type": "Group"
+            },
+            {
+              "data.group_scheme_id": "{{user.data.group_scheme_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

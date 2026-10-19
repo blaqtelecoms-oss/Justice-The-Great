@@ -1,0 +1,81 @@
+{
+  "name": "Claim",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "claim_reference": {
+      "type": "string"
+    },
+    "date_submitted": {
+      "type": "string",
+      "format": "date"
+    },
+    "claimant_name": {
+      "type": "string"
+    },
+    "deceased_name": {
+      "type": "string"
+    },
+    "cause_type": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Submitted",
+        "Under Review",
+        "Approved",
+        "Paid",
+        "Rejected"
+      ],
+      "default": "Submitted"
+    },
+    "admin_notes": {
+      "type": "string"
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "member_id",
+    "claim_reference",
+    "claimant_name",
+    "deceased_name"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "data.user_id": "{{user.id}}"
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
